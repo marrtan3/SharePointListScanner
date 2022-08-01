@@ -1,0 +1,36 @@
+<script type="text/javascript" src="/SiteAssets/Vue/ListScanner/libs/vue.global.js"></script>
+<link rel="stylesheet" href="/SiteAssets/Vue/ListScanner/libs/iso_bootstrap5.0.2.css" />
+<link rel="stylesheet" href="/SiteAssets/Vue/ListScanner/app.css" />
+
+<script>
+    const config = {
+        getListUrl: "_api/web/lists?$orderBy=Title asc&$filter=Hidden eq false and BaseType ne 1",
+        getListFields: "_api/web/lists/getByTitle('{0}')/fields?$orderBy=Title asc&$filter=Hidden eq false"
+    };
+</script>
+
+<div id="app">
+    <div class="bootstrap5">
+        <div v-if="!isLoaded">
+            <app-loader></app-loader>
+        </div>
+        <div v-else>
+            <div class="row">
+                <div class="container col-3"></div>
+                <div class="container col-9">
+                    <app-search :value="searchingText" @input="search"></app-search>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container col-3">
+                    <app-list @clicked="listSelected" :lists="lists"></app-list>
+                </div>
+                <div class="container col-9">
+                    <app-results :fields="selectedListFields"></app-results>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="/SiteAssets/Vue/ListScanner/app.js"></script>
